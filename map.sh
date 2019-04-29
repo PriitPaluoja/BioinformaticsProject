@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=80:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=priitpaluoja@gmail.com
 #SBATCH -J HISAT
@@ -26,7 +26,9 @@ mkdir mapped
 # hisat2 -S "mapped/$out" -q -x "$index" --threads "10" -1 "$first" -2 "$second"
 
 # Run 15 firstsamples:
-all="ls -l /gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/*_1.fastq.gz | head -n 15"
+# all="ls -l /gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/*_1.fastq.gz | head -n 15"
+# Run all: 
+all="ls -l /gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/*_1.fastq.gz"
 
 for f in $all; do
 	first=$f
