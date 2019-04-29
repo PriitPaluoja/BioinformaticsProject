@@ -32,5 +32,5 @@ for f in $all; do
 	second=${first%1.fastq.gz}2.fastq.gz
 	base=$(basename $first)
 	out=${base%_1.fastq.gz}.sam
-	hisat2 -1 $first -2 $second -S mapped/$out -q -x $index
+	hisat2 -S "mapped/$out" -q -x "$index" --threads "10" -1 "$first" -2 "$second"
 done
