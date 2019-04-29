@@ -16,6 +16,7 @@ source activate bio
 # conda install -c bioconda hisat2
 
 index="/gpfs/hpchome/a72094/hpc/annotations/GRCh38/hisat2_index/Homo_sapiens.GRCh38.dna.primary_assembly"
+mkdir mapped
 
 # Manual run of 1 sample:
 # first="/gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/ERR188021_1.fastq.gz"
