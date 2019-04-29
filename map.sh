@@ -8,6 +8,7 @@
 #SBATCH --mem=9000
 #SBATCH --cpus-per-task=10
 module load python-3.6.3
+module load samtools-1.9
 
 # conda create --name myenv
 source activate bio
@@ -24,13 +25,13 @@ mkdir mapped
 # out="test2.sam"
 # hisat2 -S "mapped/$out" -q -x "$index" --threads "10" -1 "$first" -2 "$second"
 
-# Run all the samples:
-all="ls -l /gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/*_1.fastq.gz"
+# Run 15 firstsamples:
+all="ls -l /gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/*_1.fastq.gz | head -n 15"
 
 for f in $all; do
 	first=$f
 	second=${first%1.fastq.gz}2.fastq.gz
 	base=$(basename $first)
-	out=${base%_1.fastq.gz}.sam
-	hisat2 -S "mapped/$out" -q -x "$index" --threads "10" -1 "$first" -2 "$second"
+	out=${base%_1.fastq.gz}.bam
+	hisat2 -q -x "$index" --threads "10" -1 "$first" -2 "$second" | samtools view -Sb > "mapped/$out"
 done
