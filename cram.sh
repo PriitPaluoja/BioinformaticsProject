@@ -8,8 +8,7 @@
 #SBATCH --mem=8000
 #SBATCH --cpus-per-task=1
 
-module load jdk-1.8.0_25
-module load cramtools-3.0
+module load samtools-1.9
 
 fasta_index="/gpfs/hpchome/a72094/hpc/annotations/GRCh38/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 
@@ -19,6 +18,5 @@ bams="ls -l mapped/*.bam"
 
 for f in $bams; do
 	base=$(basename $f)
-	#java -Xms512m -Xmx8g -jar cramtools-3.0.jar cram -I $f -O cram/${base%.bam}.cram --preserve-read-names true --lossless-quality-score true --reference-fasta-file $fasta_index
-	java -Xms512m -Xmx8g -jar cramtools-3.0.jar cram -I $f -O cram/${base%.bam}.cram --reference-fasta-file $fasta_index --preserve-read-names --lossless-quality-score
+	samtools view -C -T $fasta_index  $f > cram/${base%.bam}.cram
 done
