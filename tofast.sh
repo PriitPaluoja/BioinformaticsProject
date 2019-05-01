@@ -14,5 +14,5 @@ crams="ls -l cram/*.cram"
 
 for f in $crams; do
 	base=$(basename $f)
-	samtools fastq $f > cram/${base%.cram}.fastq
+	samtools fastq -1 cram/${base%.cram}_1.fastq.gz -2 cram/${base%.cram}_2.fastq.gz $f
 done
