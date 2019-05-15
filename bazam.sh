@@ -5,7 +5,7 @@
 #SBATCH -J HISAT
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem=9000
+#SBATCH --mem=8000
 #SBATCH --cpus-per-task=1
 
 module load jdk-1.8.0_25
@@ -28,5 +28,12 @@ module load jdk-1.8.0_25
 #                      belonging to shard n of N
 
 
-java -Xmx5000m -jar bazam.jar
+#java -Xmx5000m -jar bazam.jar
+# srun --pty --time=01:00:00 --mem=8000 bash
+
+fasta=/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/annotations/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+cram=/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/lossy/ERR188021.lossy.cram
+
+java -Dsamjdk.reference_fasta=$fasta -Xmx8000m -jar bazam.jar -bam $cram > test.fastq.gz
+
 
