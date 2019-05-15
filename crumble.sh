@@ -19,5 +19,6 @@ bams="ls -l mapped/*.bam"
 for f in $bams; do
 	base=$(basename $f)
 	samtools sort $f | samtools view -C -T $fasta_index | $soft -I CRAM -O cram,lossy_names,seqs_per_slice=100000 > lossy/${base%.bam}.lossy.cram
+	samtools index lossy/${base%.bam}.lossy.cram
 done
 
