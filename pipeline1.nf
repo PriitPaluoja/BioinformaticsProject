@@ -30,7 +30,7 @@ process mapping {
     script:
     index_base = hs2_indices[0].toString() - ~/.\d.ht2l?/
     """
-    hisat2 -q -x  $index_base --threads params.threads -1 ${files[0]} -2 ${files[1]} | samtools view -Sb > ${pair_id}.bam
+    hisat2 -q -x  $index_base --threads params.threads -1 ${files[0]} -2 ${files[1]} | samtools view -Sb -@ params.threads > ${pair_id}.bam
     """
 }
 
