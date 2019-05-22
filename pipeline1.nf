@@ -80,7 +80,7 @@ process cram {
 
 
 process lossy {
-    time '1h'
+    time '3h'
     memory '8 GB'
     cpus 1
 
