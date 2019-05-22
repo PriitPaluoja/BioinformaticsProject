@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --time=24:00:00
 #SBATCH --mail-type=ALL
-<<<<<<< HEAD
 #SBATCH --mail-user=rain.vagel@gmail.com
 #SBATCH -J HISAT
 #SBATCH -N 1
@@ -18,16 +17,6 @@ source activate rain_bio_project
 # conda install -c bioconda hisat2
 
 # mkdir bazam_results
-=======
-#SBATCH --mail-user=priitpaluoja@gmail.com
-#SBATCH -J HISAT
-#SBATCH -N 1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem=8000
-#SBATCH --cpus-per-task=1
-
-module load jdk-1.8.0_25
->>>>>>> ed7c729375bdeecbc197c7d8329ff82db66d9861
 
 #usage: java -jar bazam.jar -bam <bam> -L <regions>
 # -bam <arg>           BAM file to extract read pairs from
@@ -46,7 +35,6 @@ module load jdk-1.8.0_25
 # -s <arg>             Sharding factor: format <n>,<N>: output only reads
 #                      belonging to shard n of N
 
-<<<<<<< HEAD
 index="/gpfs/hpchome/a72094/hpc/annotations/GRCh38/hisat2_index/Homo_sapiens.GRCh38.dna.primary_assembly"
 reference="/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/annotations/Homo_sapiens.GRCh38.dna.primary_assembly.fa"
 
@@ -61,15 +49,3 @@ done
 
 #java  -Xmx12g -Dsamjdk.reference_fasta=$reference -Xmx8000m \
 #      -jar bazam.jar -bam "$file" | hisat2 -q -x "$index" --threads "10" -U - | samtools view -Sb > "bazam_results/ERR188021.bam"
-=======
-
-#java -Xmx5000m -jar bazam.jar
-# srun --pty --time=01:00:00 --mem=8000 bash
-
-fasta=/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/annotations/Homo_sapiens.GRCh38.dna.primary_assembly.fa
-cram=/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/lossy/ERR188021.lossy.cram
-
-java -Dsamjdk.reference_fasta=$fasta -Xmx8000m -jar bazam.jar -bam $cram > test.fastq.gz
-
-
->>>>>>> ed7c729375bdeecbc197c7d8329ff82db66d9861
