@@ -10,20 +10,18 @@
 
 module load python-3.6.3
 
-# Cloning the Crumble repository. Only have to run once
-# git clone https://github.com/jkbonfield/crumble.git /gpfs/hpchome/ppaluoja/bioinformaatika/projekt
-
 # Creating the conda environment
 # conda create --name rain_bio_project
 
 # Activating conda environment
-source activate rain_bio_project
+# source activate rain_bio_project
 
 # Moving to the Crumble folder
-cd /gpfs/hpchome/ppaluoja/bioinformaatika/projekt/crumble
+cd /gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/crumble
 
 # Install the necessary files and create the configure script
-autoreconf -i
+#autoreconf -i
+
 
 # Compiling Crumble files
 ./configure
