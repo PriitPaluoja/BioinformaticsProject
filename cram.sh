@@ -18,9 +18,5 @@ bams="ls -l mapped/*.bam"
 
 for f in $bams; do
 	base=$(basename $f)
-<<<<<<< HEAD
 	samtools view -C -T $fasta_index $f > cram/${base%.bam}.cram
-=======
-	samtools view -C -T $fasta_index  $f > cram/${base%.bam}.cram
->>>>>>> ed7c729375bdeecbc197c7d8329ff82db66d9861
 done
