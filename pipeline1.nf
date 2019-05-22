@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 hs2_indices = Channel
-       .fromPath("${params.hisat2_index}*")
+       .fromPath("${params.hisat2_index}.*ht2")
        .ifEmpty { exit 1, "HISAT2 index not found: ${params.hisat2_index}" }
 
 
@@ -18,8 +18,13 @@ Channel
 
 /*
  *https://github.com/nf-core/rnaseq/blob/master/main.nf
+ * 
  */
 process mapping {
+    time '1h'
+    memory '8 GB'
+    cpus 5
+
     input:
     file hs2_indices from hs2_indices.collect()
     set pair_id, files from read_pairs
@@ -30,12 +35,17 @@ process mapping {
     script:
     index_base = hs2_indices[0].toString() - ~/.\d.ht2l?/
     """
-    hisat2 -q -x  $index_base --threads params.threads -1 ${files[0]} -2 ${files[1]} | samtools view -Sb -@ params.threads > ${pair_id}.bam
+    
+    hisat2 -q -x  $index_base --threads 5 -1 ${files[0]} -2 ${files[1]} | samtools view -Sb -@ 5 > ${pair_id}.bam
     """
 }
 
 
 process sort {
+    time '1h'
+    memory '8 GB'
+    cpus 5
+
     input:
     file f from bam_files
     
@@ -44,12 +54,16 @@ process sort {
     
     script:
     """
-    samtools sort ${f} -@ params.threads  > ${f.baseName}.sorted.bam 
+    samtools sort ${f} -@ 5  > ${f.baseName}.sorted.bam 
     """
 }
 
 
 process cram {
+    time '1h'
+    memory '8 GB'
+    cpus 5
+
     input:
     file refs from fasta_refs.collect()
     file f from sorted
@@ -60,12 +74,16 @@ process cram {
     script:
     ref = refs[0].toString()
     """
-    samtools view -C -T $ref ${f} -@ params.threads > ${f.baseName}.cram
+    samtools view -C -T $ref ${f} -@ 5 > ${f.baseName}.cram
     """
 }
 
 
 process lossy {
+    time '1h'
+    memory '8 GB'
+    cpus 1
+
     publishDir "results"
     
     input:
