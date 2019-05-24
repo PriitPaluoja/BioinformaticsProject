@@ -21,4 +21,4 @@ fasta_ref="/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/
 input=/gpfs/hpchome/a72094/hpc/datasets/open_access/GEUVADIS/fastq/ERR188021_{1,2}.fastq.gz
 #input=/gpfs/hpchome/ppaluoja/bioinformaatika/projekt/BioinformaticsProject/mock/file{1,2}.fastq
 
-nextflow pipeline1.nf --hisat2_index $hisat_db --fasta_ref $fasta_ref --reads $input --threads 1
+nextflow pipeline1.nf --hisat2_index $hisat_db --fasta_ref $fasta_ref --reads $input
