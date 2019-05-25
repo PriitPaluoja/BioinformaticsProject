@@ -12,17 +12,17 @@ fasta_refs = Channel
 
 crams = Channel
         .fromPath("${params.crams}*.cram")
-        .ifEmpty { exit 1, "FASTA reference not found: ${params.crams}" }
+        .ifEmpty { exit 1, "CRAMS not found: ${params.crams}" }
 
 crams_indices = Channel
             .fromPath("${params.crams}*.crai")
-            .ifEmpty { exit 1, "FASTA reference not found: ${params.crams}" }
+            .ifEmpty { exit 1, "CRAM INDEX not found: ${params.crams}" }
 
 
 process bam {
-    time '7h'
-    memory '16 GB'
-    cpus 5
+    time '10h'
+    memory '35 GB'
+    cpus 10
     
     publishDir "final"
 
@@ -41,7 +41,7 @@ process bam {
     fasta_base = refs[0].toString() - ~/.\d.fai?/
     """
     
-    java -Dsamjdk.reference_fasta=$fasta_base -Xmx8G -jar $bazam -bam ${f} | hisat2 -q -x $index_base --threads 5 -U - | samtools view -Sb -@ 5 > ${f.baseName}.bam
+    java -Dsamjdk.reference_fasta=$fasta_base -Xms10G -Xmx35G -jar $bazam -bam ${f} | hisat2 -q -x $index_base --threads 10 -U - | samtools view -Sb -@ 10 > ${f.baseName}.bam
     """
 }
 
