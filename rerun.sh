@@ -41,7 +41,7 @@ for f in $all; do
 	$features/featureCounts -p -C -D 5000 -d 50 -s2 -a $annotations -o $base.results.2.counts $base.new.sorted.bam
 	
 	# CRAM -> Crumble -> lossy cram -> fastq -> hisat2 -> featureCounts
-	samtools view -C -T $fasta_index $base.sorted.bam -@ 20 | $soft -I CRAM -O cram, lossy_names, seqs_per_slice=100000 > $base.lossy.cram
+	samtools view -C -T $fasta_index $base.sorted.bam -@ 20 | $soft -I CRAM -O cram,lossy_names,seqs_per_slice=100000 > $base.lossy.cram
 	samtools index $base.lossy.cram
 	samtools collate $base.lossy.cram -o $base.collated2.bam 
 	samtools fastq -F 2816 --reference $fasta_index -1 $base.lossy.1.fastq.gz -2 $base.lossy.2.fastq.gz $base.collated2.bam 
