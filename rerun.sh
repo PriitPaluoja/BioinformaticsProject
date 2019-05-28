@@ -50,3 +50,4 @@ for f in $all; do
 	samtools index $base.lossy.sorted.bam
 	$features/featureCounts -p -C -D 5000 -d 50 -s2 -a $annotations -o $base.results.3.counts $base.lossy.sorted.bam
 done
+
